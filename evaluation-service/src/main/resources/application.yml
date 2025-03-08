@@ -1,0 +1,29 @@
+server :
+  port : 8190
+
+spring :
+  application:
+    name: evaluation-service
+
+  config:
+    import: configserver:http://${CONFIG_SERVER_HOST:172.20.136.101}:8888
+
+  jpa :
+    hibernate :
+      ddl-auto : update
+    show-sql : true
+    properties :
+      hibernate :
+        format_sql : true
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/evaluation_db}?createDatabaseIfNotExist=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+rabbitmq:
+  create-evaluation-resource-queue: create-evaluation-resource-queue
+  delete-evaluation-resource-queue: delete-evaluation-resource-queue
+  evaluation-resource-status-queue: evaluation-resource-status-queue
+
